@@ -57,6 +57,23 @@ $(document).ready(function(){
 		numerosIngresados.push(n);
 	};
 
+	// FUNCIÓN JUEGO NUEVO
+	var nuevoJuego = function (){
+		numeroRandom = Math.floor((Math.random() * 100) + 1);
+		win = false;
+		numerosIngresados = [];
+		enviarAlerta('');
+		enviarMensaje('');
+		$('#lista').empty();
+		$('button[type="submit"]').prop('disabled', false);
+	};
+
+	// EJECUCIÓN
+
+	$(document).on('click','button[type="button"]', function(){
+		nuevoJuego();
+	});
+
 	$('form').submit(function(event){
 
 		event.preventDefault(); // para evitar que se recargue al página al enviar.
@@ -68,6 +85,9 @@ $(document).ready(function(){
 				numerosUsados(numeroUsuario);
 				listaNumeros(numeroUsuario);
 				compararNumero(numeroUsuario, numeroRandom);
+				if(win === true){
+					$('button[type="submit"]').prop('disabled', true);
+				}
 			}
 		} else {
 			enviarMensaje('Intenta de nuevo');
