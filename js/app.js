@@ -1,20 +1,19 @@
 $(document).ready(function(){
 
 	var numeroUsuario;
-
 	var numeroRandom = Math.floor((Math.random() * 100) + 1);
-
 	var win = false;
+	var numerosIngresados = [];
 
 	//$('#random').text(numeroRandom);
 
 	// FUNCION MENSAJE
 	var enviarMensaje = function (mensaje) {
 		$('#mensaje').text(mensaje);
-	}
+	};
 	var enviarAlerta = function (mensaje) {
 		$('#alerta').text(mensaje);
-	}
+	};
 
 	// FUNCION VERIFICAR NÚMERO
 	var verificarNumero = function (n){
@@ -25,7 +24,7 @@ $(document).ready(function(){
 			enviarAlerta('El número debe estar entre 1 y 100');
 			return true;
 		} else {
-			enviarAlerta('El número es: '+ n);
+			// enviarAlerta('El número es: '+ n);
 			return false;
 		}
 	};
@@ -40,7 +39,7 @@ $(document).ready(function(){
 		var restaNumeros = r - n;
 		var resultado = Math.abs(restaNumeros);
 		if (n === r) {
-			enviarMensaje('Has ganado');
+			enviarMensaje('Has ganado, te tomo ' + numerosIngresados.length + ' intentos.');
 			win = true;
 		} else if (resultado > 20) {
 			enviarMensaje('Muy Frio');
@@ -53,16 +52,26 @@ $(document).ready(function(){
 		}
 	};
 
+	//FUNCION AGREGAR A ARRAY numerosIngresados
+	var numerosUsados = function (n){
+		numerosIngresados.push(n);
+	};
+
 	$('form').submit(function(event){
-		
+
 		event.preventDefault(); // para evitar que se recargue al página al enviar.
 		numeroUsuario = parseInt($('#inNumero').val());
 		if (verificarNumero(numeroUsuario) ===  false){
-			listaNumeros(numeroUsuario);
-			compararNumero(numeroUsuario, numeroRandom);
+			if ($.inArray(numeroUsuario,numerosIngresados) > -1){
+					enviarAlerta('Ya intentaste con ese número.');
+			} else {
+				numerosUsados(numeroUsuario);
+				listaNumeros(numeroUsuario);
+				compararNumero(numeroUsuario, numeroRandom);
+			}
 		} else {
 			enviarMensaje('Intenta de nuevo');
-		};
+		}
 		return numeroUsuario;
 
 	});
