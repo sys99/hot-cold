@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var win = false;
 	var numerosIngresados = [];
 
-	//$('#random').text(numeroRandom);
+	//$('#random').text(numeroRandom); Solo para comprobar que esta generando número aleatorio.
 
 	// FUNCION MENSAJE
 	var enviarMensaje = function (mensaje) {
